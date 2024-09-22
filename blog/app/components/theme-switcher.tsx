@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
-type Theme = "light" | "dark";
+type Theme = 'null' | "light" | "dark";
 
 export const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>('null');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!("theme" in localStorage)) {
       const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       const nextTheme = isDark ? "dark" : "light";
@@ -20,7 +20,6 @@ export const ThemeSwitcher = () => {
   }, []);
 
   const applyTheme = (nextTheme: Theme) => {
-    //if (localStorage.getItem("theme") === nextTheme) return;
 
     setTheme(nextTheme);
     localStorage.setItem("theme", nextTheme);
@@ -35,6 +34,8 @@ export const ThemeSwitcher = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     applyTheme(nextTheme);
   };
+
+  if (theme === 'null') return null;
 
   return (
     <button onClick={handleToggle}>
